@@ -83,7 +83,10 @@ class MovieList extends StatelessWidget {
         child: FadeInImage(
             placeholder: const AssetImage('assets/images/no-image.jpg'),
             image: NetworkImage(movieSearch.fullMoviePath),
-            fit: BoxFit.contain),
+            width: 50,
+            fit: BoxFit.contain,
+            
+            ),
       ),
       title: Text(movieSearch.title),
       subtitle: Text(movieSearch.originalTitle),
