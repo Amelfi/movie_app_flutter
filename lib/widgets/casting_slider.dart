@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'package:movie_app_flutter/models/models.dart';
 import 'package:movie_app_flutter/providers/movies_provider.dart';
 import 'package:provider/provider.dart';

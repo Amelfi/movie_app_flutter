@@ -21,16 +21,15 @@ class _MovieSliderState extends State<MovieSlider> {
 
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
-        scrollController.position.maxScrollExtent - 500) {
+          scrollController.position.maxScrollExtent - 500) {
         widget.onNextPage();
       }
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 250,
       child: Column(
@@ -49,7 +48,9 @@ class _MovieSliderState extends State<MovieSlider> {
                   controller: scrollController,
                   scrollDirection: Axis.horizontal,
                   itemCount: widget.movie.length,
-                  itemBuilder: (BuildContext context, int index) =>_MoviePoster(widget.movie[index]))),
+                  itemBuilder: (BuildContext context, int index) =>
+                      _MoviePoster(widget.movie[index],
+                          '${widget.title}-$index-${widget.movie[index].id}'))),
         ],
       ),
     );
@@ -58,10 +59,12 @@ class _MovieSliderState extends State<MovieSlider> {
 
 class _MoviePoster extends StatelessWidget {
   final Movie movie;
-  const _MoviePoster(this.movie);
+  final String hero;
+  const _MoviePoster(this.movie, this.hero);
 
   @override
   Widget build(BuildContext context) {
+    movie.heroId = hero;
     return Container(
       // padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       width: 130,
@@ -71,16 +74,19 @@ class _MoviePoster extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () => Navigator.pushNamed(context, 'detail',
-                arguments: movie),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: FadeInImage(
-                placeholder: const AssetImage('assets/images/no-image.jpg'),
-                image: NetworkImage(movie.fullMoviePath),
-                fit: BoxFit.cover,
-                width: 130,
-                height: 190,
+            onTap: () =>
+                Navigator.pushNamed(context, 'detail', arguments: movie),
+            child: Hero(
+              tag: movie.heroId!,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: FadeInImage(
+                  placeholder: const AssetImage('assets/images/no-image.jpg'),
+                  image: NetworkImage(movie.fullMoviePath),
+                  fit: BoxFit.cover,
+                  width: 130,
+                  height: 190,
+                ),
               ),
             ),
           ),
